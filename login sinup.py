@@ -1,69 +1,61 @@
-print("'WECOME' to wold of accentuar")
-print("login/singup")
-option=input("enter hare whot you whant ")
-if option=="singup":
-    global name
-    name=input("enter your name\n")
-    print("here i wont your bio.data")
-    hoby=input("what is your hobby\n")
-    food=input("what is your favorat food\n")
-    work=input("what are you doing your free time\n")
-    date=input("date of biarth\n")
-    i=0
-    while i<100:
-        print("password shoud be five digit")
-        global p
-        p=int(input("create your password"))
-        forlen=str(p)
-        if len(forlen)==5:
-            if p>0 and p<=99999:
-                print("password strong")
-                break
+import json
+print("\n 'click login if you already signup \n otherwise first click signup \n")
+
+user=input('enter login or signup:-')
+if user=='signup':
+    name=input('enter your name:-')
+    password1=input('enter your password:-')
+    lower,upper,special,digit=0,0,0,0
+    if len(password1)>=4:
+            for i in password1:
+                if(i.isupper()):
+                    upper=1
+                if (i.islower()):
+                    lower=1
+                if (i.isdigit()):
+                    digit=1
+                if '!' in password1 or '@' in password1 or '#' in password1 or '$' in password1 or '%' in password1 or '^' in password1 or'&' in password1:
+                    special=1
+            if (upper+lower+digit+special)!=4:
+                print('\n                  creat a strong password\n password should be atleast one upper one lower one digit and one special character\n                  try later\n')
             else:
-                print("password not strong")
-                print("create again")
-        else:
-            print(" not five digit password ")
-            print("create again")
-        
-        i+=1
-    # con=input("conform password")
-    j=0
-    while j<100:
-        con=int(input("conform password"))
-        if con==p:
-            print("correct")
-            break
-        else:
-            print("not match")
-        j+=1
-    link=input("whant to link with a facebook\nyes or no")
-    if link=="yes":
-        print(" link succesfull")
+                password2=input('conform your password:-') 
+                if password1!=password2:
+                    print('both password is not same')
+                else:
+                    DOB=int(input('enter your date of birth:-'))
+                    email=input('enter your email:-')
+                    mobile=int(input('enter your mobile no:-'))
+                    gender=input('enter your gender:-')
+                    dic={}
+                    dic['new']={}
+                    dic['new']['name']=name
+                    dic['new']['password']=password1
+                    dic['new']['DOB']=DOB
+                    dic['new']['email']=email
+                    dic['new']['mobile']=mobile
+                    dic['new']['gender']=gender
+                    with open ('userdetails.json','w') as f:
+                        a=json.dump(dic,f,indent=4)
+                    print()   
+                    print('congracts',name,'you sign up succesfully')
+                
+
     else:
-        print("not link")
-log=input("do you whant to login \n yes or no")
-if log=="yes":
-    h=0
-    while h<100:
-        name2=input("enter name")
-        if name2==name:
-            print("correct")
-            break
+        print('password should be greater then 4')
+   
+elif user=='login':
+    d=open('userdetails.json','r')
+    h=json.load(d)
+    name1=input('enter your name:-')
+    if h['new']['name']== name1:
+        password1=input('enter your password:-')
+        if h['new']['password']==password1:
+            print('you login successfully')
         else:
-            print("enter the same 'name'whitch you use for singup")
-        h+=1
-    print("whitch you alrady creat")
-    logpass=input("enter password")
-    k=0
-    while k<100:
-        if logpass==p:
-            print("correct")
-            break
-        else:
-            print("not correct")
-        k+=1
-# else:
-#     print('"WELCOME"\ncreating account is succesfill ')
-print('"WELCOME"\ncreating account is succesfill ')
-        
+            print('password is not  same as the signup please try again')
+    else:
+        print('name is not  be same as the signup try again')
+
+else:
+    print("\nplease choose login or signup \n")
